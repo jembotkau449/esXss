@@ -4,7 +4,7 @@
 define('debug', false);
 
 // Defines whenever httpmode is enabled, this allows ezXSS panel to be used without SSL
-define('httpmode', false);
+define('httpmode', true);
 
 // Defines whenever sign up is enabled, do not enable this unless you are serving a public ezXSS installation - this allows anyone to register!
 define('signupEnabled', false);
