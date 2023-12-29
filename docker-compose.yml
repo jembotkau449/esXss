@@ -1,0 +1,28 @@
+version: '3.7'
+
+services:
+  ezxssdb:
+    image: mysql
+    command: --default-authentication-plugin=mysql_native_password
+    restart: always
+    environment:
+      - MYSQL_RANDOM_ROOT_PASSWORD=yes
+      - MYSQL_DATABASE=${dbName}
+      - MYSQL_USER=${dbUser}
+      - MYSQL_PASSWORD=${dbPassword}
+    volumes:
+      - "./ezxssdb:/var/lib/mysql"
+  ezxss:
+    build:
+      context: .
+      dockerfile: ./Dockerfile
+      args:
+        - USE_MAIL_ALERTS=${useMailAlerts}
+    ports:
+      - "${dockerHttpPort:-80}:80"
+      - "${dockerHttpsPort:-443}:443"
+    volumes:
+      - .:/var/www/html
+    restart: always
+    depends_on:
+      - ezxssdb
